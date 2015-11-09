@@ -1,0 +1,613 @@
+{
+  "_id": "55f191618c7062f996a0b849",
+  "created": "2014-11-05T15:54:45.689Z",
+  "tinyId": "bJ5Sm82g8",
+  "isCopyrighted": false,
+  "__v": 3,
+  "referenceDocuments": [],
+  "displayProfiles": [],
+  "classification": [
+    {
+      "elements": [
+        {
+          "name": "Loinc Test Forms",
+          "elements": []
+        }
+      ],
+      "stewardOrg": {
+        "name": "TEST"
+      }
+    }
+  ],
+  "formElements": [
+    {
+      "elementType": "section",
+      "label": "Your Health Information",
+      "cardinality": "1",
+      "formElements": [
+        {
+          "label": "Birth date",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Date",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "version": "3",
+              "tinyId": "c5xhe9kgvos",
+              "permissibleValues": []
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Person Height Value",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "NUMBER",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [
+              "m"
+            ],
+            "cde": {
+              "outdated": true,
+              "version": "4",
+              "tinyId": "tXwaaWzu1Od",
+              "permissibleValues": []
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Patient name",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Character",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "version": "1.1",
+              "tinyId": "bJWBQCdXm",
+              "permissibleValues": [],
+              "derivationRules": []
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Person Weight Value",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Float",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "version": "1",
+              "tinyId": "z93OErjdWOh",
+              "outdated": true,
+              "permissibleValues": []
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Gender Type",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Value List",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [
+              {
+                "valueMeaningName": "Female",
+                "permissibleValue": "Female"
+              },
+              {
+                "valueMeaningName": "Male",
+                "permissibleValue": "Male"
+              },
+              {
+                "valueMeaningName": "Unknown",
+                "permissibleValue": "Unknown"
+              },
+              {
+                "valueMeaningName": "Undifferentiated/Indeterminant/Intersex",
+                "permissibleValue": "Unspecified"
+              },
+              {
+                "valueMeaningName": "Not reported",
+                "permissibleValue": "Not reported"
+              }
+            ],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "version": "3",
+              "tinyId": "9dPqtbFSpZU",
+              "outdated": true,
+              "permissibleValues": [
+                {
+                  "permissibleValue": "Female",
+                  "valueMeaningName": "Female"
+                },
+                {
+                  "permissibleValue": "Male",
+                  "valueMeaningName": "Male"
+                },
+                {
+                  "permissibleValue": "Unknown",
+                  "valueMeaningName": "Unknown"
+                },
+                {
+                  "permissibleValue": "Unspecified",
+                  "valueMeaningName": "Undifferentiated/Indeterminant/Intersex"
+                },
+                {
+                  "permissibleValue": "Not reported",
+                  "valueMeaningName": "Not reported"
+                }
+              ]
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Person Body Mass Index Value",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "NUMBER",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [
+              "kg/m2"
+            ],
+            "cde": {
+              "outdated": true,
+              "version": "3",
+              "tinyId": "tYAa6S8P7wC",
+              "permissibleValues": []
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Alcohol current use indicator",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Value List",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [
+              {
+                "valueMeaningName": "Yes",
+                "permissibleValue": "Yes"
+              },
+              {
+                "valueMeaningName": "No",
+                "permissibleValue": "No"
+              }
+            ],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "version": "3",
+              "tinyId": "pWj94_qVzz_",
+              "permissibleValues": [
+                {
+                  "permissibleValue": "Yes",
+                  "valueMeaningName": "Yes"
+                },
+                {
+                  "permissibleValue": "No",
+                  "valueMeaningName": "No"
+                },
+                {
+                  "permissibleValue": "Unknown",
+                  "valueMeaningName": "Unknown"
+                }
+              ]
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "elementType": "section",
+          "label": "Alcohol Use",
+          "skipLogic": {
+            "condition": "\"Alcohol current use indicator\" = \"Yes\""
+          },
+          "formElements": [
+            {
+              "label": "Alcohol use frequency",
+              "elementType": "question",
+              "formElements": [],
+              "question": {
+                "datatype": "Value List",
+                "otherPleaseSpecify": {
+                  "value": false
+                },
+                "answers": [
+                  {
+                    "valueMeaningName": "Monthly or less",
+                    "permissibleValue": "Monthly or less"
+                  },
+                  {
+                    "valueMeaningName": "2 to 4 times a month",
+                    "permissibleValue": "2 to 4 times a month"
+                  },
+                  {
+                    "valueMeaningName": "2 to 3 times a week",
+                    "permissibleValue": "2 to 3 times a week"
+                  },
+                  {
+                    "valueMeaningName": "4 or more times a week",
+                    "permissibleValue": "4 or more times a week"
+                  },
+                  {
+                    "valueMeaningName": "Unknown",
+                    "permissibleValue": "Unknown"
+                  },
+                  {
+                    "valueMeaningName": "Never",
+                    "permissibleValue": "Never"
+                  }
+                ],
+                "editable": true,
+                "required": false,
+                "uoms": [],
+                "cde": {
+                  "version": "3",
+                  "tinyId": "5tds2-CyWgt",
+                  "permissibleValues": [
+                    {
+                      "permissibleValue": "Monthly or less",
+                      "valueMeaningName": "Monthly or less"
+                    },
+                    {
+                      "permissibleValue": "2 to 4 times a month",
+                      "valueMeaningName": "2 to 4 times a month"
+                    },
+                    {
+                      "permissibleValue": "2 to 3 times a week",
+                      "valueMeaningName": "2 to 3 times a week"
+                    },
+                    {
+                      "permissibleValue": "4 or more times a week",
+                      "valueMeaningName": "4 or more times a week"
+                    },
+                    {
+                      "permissibleValue": "Unknown",
+                      "valueMeaningName": "Unknown"
+                    },
+                    {
+                      "permissibleValue": "Never",
+                      "valueMeaningName": "Never"
+                    }
+                  ]
+                }
+              },
+              "cardinality": "1"
+            },
+            {
+              "label": "Alcohol use started age value",
+              "elementType": "question",
+              "formElements": [],
+              "question": {
+                "datatype": "Integer",
+                "otherPleaseSpecify": {
+                  "value": false
+                },
+                "answers": [],
+                "editable": true,
+                "required": false,
+                "uoms": [
+                  "year"
+                ],
+                "cde": {
+                  "version": "3",
+                  "tinyId": "vfSZy6m4c7o",
+                  "permissibleValues": []
+                }
+              },
+              "cardinality": "1"
+            }
+          ],
+          "question": {
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "permissibleValues": []
+            }
+          },
+          "cardinality": "1"
+        }
+      ],
+      "question": {
+        "otherPleaseSpecify": {
+          "value": false
+        },
+        "answers": [],
+        "editable": true,
+        "required": false,
+        "uoms": [],
+        "cde": {
+          "permissibleValues": []
+        }
+      }
+    },
+    {
+      "elementType": "section",
+      "label": "Your Disease History",
+      "cardinality": "*",
+      "formElements": [
+        {
+          "label": "Diagnosis initial age value",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Integer",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [],
+            "editable": true,
+            "required": false,
+            "uoms": [
+              "year"
+            ],
+            "cde": {
+              "version": "3",
+              "tinyId": "-dZecSUoNVD",
+              "permissibleValues": []
+            }
+          },
+          "cardinality": "1"
+        },
+        {
+          "label": "Medical history condition type",
+          "elementType": "question",
+          "formElements": [],
+          "question": {
+            "datatype": "Value List",
+            "otherPleaseSpecify": {
+              "value": false
+            },
+            "answers": [
+              {
+                "permissibleValue": "Cardiac pacemaker",
+                "valueMeaningName": "Cardiac pacemaker"
+              },
+              {
+                "permissibleValue": "Cardiac surgery, specify",
+                "valueMeaningName": "Cardiac surgery, specify"
+              },
+              {
+                "permissibleValue": "Other cardiac disorders, specify",
+                "valueMeaningName": "Other cardiac disorders, specify"
+              },
+              {
+                "permissibleValue": "Hypertension",
+                "valueMeaningName": "Hypertension"
+              },
+              {
+                "permissibleValue": "Hypotension",
+                "valueMeaningName": "Hypotension"
+              },
+              {
+                "permissibleValue": "Orthostatic hypotension",
+                "valueMeaningName": "Orthostatic hypotension"
+              },
+              {
+                "permissibleValue": "Deep vein thrombosis",
+                "valueMeaningName": "Deep vein thrombosis"
+              },
+              {
+                "permissibleValue": "Neuropathy (alcoholic, diabetic, and others)",
+                "valueMeaningName": "Neuropathy (alcoholic, diabetic, and others)"
+              },
+              {
+                "permissibleValue": "Diabetes",
+                "valueMeaningName": "Diabetes"
+              },
+              {
+                "permissibleValue": "Hyperlipidemia",
+                "valueMeaningName": "Hyperlipidemia"
+              },
+              {
+                "permissibleValue": "Myocardial infarction",
+                "valueMeaningName": "Myocardial infarction"
+              },
+              {
+                "permissibleValue": "Stroke",
+                "valueMeaningName": "Stroke"
+              },
+              {
+                "permissibleValue": "Family history of cardiovascular disease",
+                "valueMeaningName": "Family history of cardiovascular disease"
+              },
+              {
+                "permissibleValue": "Other, specify",
+                "valueMeaningName": "Other, specify"
+              },
+              {
+                "permissibleValue": "None of the above",
+                "valueMeaningName": "None of the above"
+              },
+              {
+                "permissibleValue": "Unknown",
+                "valueMeaningName": "Unknown"
+              }
+            ],
+            "editable": true,
+            "required": false,
+            "uoms": [],
+            "cde": {
+              "outdated": true,
+              "version": "3",
+              "tinyId": "PMobdmmtfys",
+              "permissibleValues": [
+                {
+                  "valueMeaningName": "Cardiac pacemaker",
+                  "permissibleValue": "Cardiac pacemaker"
+                },
+                {
+                  "valueMeaningName": "Cardiac surgery, specify",
+                  "permissibleValue": "Cardiac surgery, specify"
+                },
+                {
+                  "valueMeaningName": "Other cardiac disorders, specify",
+                  "permissibleValue": "Other cardiac disorders, specify"
+                },
+                {
+                  "valueMeaningName": "Hypertension",
+                  "permissibleValue": "Hypertension"
+                },
+                {
+                  "valueMeaningName": "Hypotension",
+                  "permissibleValue": "Hypotension"
+                },
+                {
+                  "valueMeaningName": "Orthostatic hypotension",
+                  "permissibleValue": "Orthostatic hypotension"
+                },
+                {
+                  "valueMeaningName": "Deep vein thrombosis",
+                  "permissibleValue": "Deep vein thrombosis"
+                },
+                {
+                  "valueMeaningName": "Neuropathy (alcoholic, diabetic, and others)",
+                  "permissibleValue": "Neuropathy (alcoholic, diabetic, and others)"
+                },
+                {
+                  "valueMeaningName": "Diabetes",
+                  "permissibleValue": "Diabetes"
+                },
+                {
+                  "valueMeaningName": "Hyperlipidemia",
+                  "permissibleValue": "Hyperlipidemia"
+                },
+                {
+                  "valueMeaningName": "Myocardial infarction",
+                  "permissibleValue": "Myocardial infarction"
+                },
+                {
+                  "valueMeaningName": "Stroke",
+                  "permissibleValue": "Stroke"
+                },
+                {
+                  "valueMeaningName": "Family history of cardiovascular disease",
+                  "permissibleValue": "Family history of cardiovascular disease"
+                },
+                {
+                  "valueMeaningName": "Other, specify",
+                  "permissibleValue": "Other, specify"
+                },
+                {
+                  "valueMeaningName": "None of the above",
+                  "permissibleValue": "None of the above"
+                },
+                {
+                  "valueMeaningName": "Unknown",
+                  "permissibleValue": "Unknown"
+                }
+              ]
+            }
+          },
+          "cardinality": "1"
+        }
+      ],
+      "question": {
+        "otherPleaseSpecify": {
+          "value": false
+        },
+        "answers": [],
+        "editable": true,
+        "required": false,
+        "uoms": [],
+        "cde": {
+          "permissibleValues": []
+        }
+      }
+    },
+    {
+      "formElements": [],
+      "question": {
+        "otherPleaseSpecify": {
+          "value": false
+        },
+        "answers": [],
+        "editable": true,
+        "required": false,
+        "uoms": [],
+        "cde": {
+          "permissibleValues": []
+        }
+      }
+    }
+  ],
+  "createdBy": {
+    "userId": "537cf7c8bc1dc5960507f958",
+    "username": "ludetc"
+  },
+  "history": [],
+  "comments": [],
+  "attachments": [],
+  "ids": [],
+  "properties": [],
+  "registrationState": {
+    "registrationStatus": "Incomplete"
+  },
+  "stewardOrg": {
+    "name": "TEST"
+  },
+  "naming": [
+    {
+      "designation": "Test Form",
+      "definition": "A sample form",
+      "context": {
+        "contextName": "Health",
+        "acceptability": "preferred"
+      }
+    }
+  ]
+}

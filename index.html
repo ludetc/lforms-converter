@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
+
+    <title>lforms Directive Test</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/select2/select2.css" />
+    <link rel="stylesheet" href="bower_components/autocomplete-lhc/source/auto_completion.css" />
+    <link rel="stylesheet" href="bower_components/lforms/app/styles/lforms.css" />
+    <!-- endbower -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin" media="all"/>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+
+  </head>
+  <body ng-app="lformsTestApp">
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+
+  <!--[if lt IE 9]>
+  <script src="bower_components/es5-shim/es5-shim.js"></script>
+  <script src="bower_components/json3/lib/json3.min.js"></script>
+  <![endif]-->
+
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/oboe/dist/oboe-browser.js"></script>
+  <script src="bower_components/traverse/traverse.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/json3/lib/json3.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+  <script src="bower_components/select2/select2.js"></script>
+  <script src="bower_components/angular-ui-select2/src/select2.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+  <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/prototype_api.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/effects.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/effectScroll.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/event.simulate.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/observable.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/screenReaderLog.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/recordDataRequester.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/fieldAlarms.js"></script>
+  <script src="bower_components/autocomplete-lhc/soundmanager/bonk.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/dialog.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/autoCompBase.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/suggestionDialog.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/autoCompPrefetch.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/autoCompSearch.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/autoCompEvents.js"></script>
+  <script src="bower_components/autocomplete-lhc/source/autocomplete-lhc.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/ngSmoothScroll/lib/angular-smooth-scroll.js"></script>
+  <script src="bower_components/lforms/app/lforms.js"></script>
+  <script src="bower_components/lforms/app/scripts/lforms-constants.js"></script>
+  <script src="bower_components/lforms/app/scripts/controllers/panel-table.js"></script>
+  <script src="bower_components/lforms/app/scripts/directives/lf-date.js"></script>
+  <script src="bower_components/lforms/app/scripts/lib/date.js"></script>
+  <script src="bower_components/lforms/app/scripts/lib/js-class.js"></script>
+  <script src="bower_components/lforms/app/scripts/lib/cross_browser.js"></script>
+  <script src="bower_components/lforms/app/scripts/lib/util.js"></script>
+  <script src="bower_components/lforms/app/scripts/lib/lforms-data.js"></script>
+  <script src="bower_components/lforms/app/scripts/services/selected-panel.js"></script>
+  <script src="bower_components/lforms/app/lforms.tpl.js"></script>
+  <!-- endbower -->
+
+  <script src="lforms-converter.js"></script>
+
+  <!-- lforms test controller -->
+    <script type="text/javascript">
+      angular.module('lformsTestApp', ['lformsWidget', 'ngRoute'])
+        .config(function ($routeProvider) {
+          $routeProvider.
+            when("/vertical", {
+              controller: "lformsTestControllerV",
+              templateUrl: "vertical.html"
+            }).
+            when("/horizontal-form-default", {
+              controller: "lformsTestControllerH",
+              templateUrl: "horizontal.html"
+            }).
+            otherwise({redirectTo: "/vertical"})
+        }).
+        controller('lformsTestControllerV', ['$scope', function ($scope) {
+          setLfData($scope);
+        }]).
+        controller('lformsTestControllerH', ['$scope', function ($scope) {
+          setLfData($scope);
+        }]);
+
+
+      function setLfData(scope) {
+        var converter = new LformsConverter();
+        converter.transform('test/test-cde.json', function(lfData) {
+          scope.lfData = new LFormsData(lfData);
+          scope.$apply(scope.lfData);
+        }, function(err) {
+          scope.error = err;
+        });
+      }
+
+    </script>
+
+    <script type="text/ng-template" id="vertical.html">
+      <lforms-panel-v></lforms-panel-v>
+    </script>
+    <script type="text/ng-template" id="horizontal.html">
+      <lforms-panel-h></lforms-panel-h>
+    </script>
+
+    <div ng-view=""></div>
+
+  </body>
+</html>
