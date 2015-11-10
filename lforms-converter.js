@@ -10,15 +10,15 @@
  * Class definition
  */
 
-var   LformsConverter = function() {};
+var   LFormsConverter = function() {};
 
-_.extend(LformsConverter.prototype, {
+_.extend(LFormsConverter.prototype, {
 
   /**
    *  API to initiate the parsing
    *  @param: {String} urlStr - Source of json input source, either a filename or url
    */
-  transform: function (urlStr, successCallback, failCallback) {
+  convert: function (urlStr, successCallback, failCallback) {
     var self = this;
     self.parse(urlStr, successCallback, failCallback);
   },
@@ -90,7 +90,7 @@ _.extend(LformsConverter.prototype, {
    ************************************************************************
    * All handlers have the following signature.
    * @param: param Object representing node resulting from jsonpath expression.
-   * Anny modification to param reflects in the output json.
+   * Any modification to param reflects in the output json.
    *
    * @param path: Array of path elements to this param.
    *

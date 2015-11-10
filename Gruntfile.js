@@ -86,7 +86,6 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
-          port: 9051,
           middleware: function (connect) {
             return [
               connect.static('test'),
@@ -103,7 +102,7 @@ module.exports = function (grunt) {
 
     protractor: {
       options: {
-        configFile: 'test/protractor/conf.js' // Default config file
+        configFile: './test/protractor/conf.js' // Default config file
         // If keepAlive it true, grunt test finishes with the statement "Done,
         // without errors" even when there are errors.
         //keepAlive: true // If false, the grunt process stops when the test fails.
@@ -158,8 +157,16 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('setTestPort', 'Read test port from protractor config file', function() {
+    var protractorConfig = require(grunt.config.get('protractor.options.configFile'));
+    var urlParts = require('url').parse(protractorConfig.config.baseUrl);
+    var port = parseInt(urlParts.port);
+    grunt.config.set('connect.test.options.port', port);
+  });
+
   grunt.registerTask('test', [
     'wiredep',
+    'setTestPort',
     'connect:test',
     'protractor'
   ]);
