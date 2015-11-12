@@ -12,6 +12,7 @@
 
 module.exports = function (grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -100,6 +101,19 @@ module.exports = function (grunt) {
       }
     },
 
+    jasmine : {
+      src : 'lforms-converter.js',
+      options : {
+        specs : 'test/unit/**/*.spec.js',
+        vendor: [
+          'bower_components/oboe/dist/oboe-browser.js',
+          'bower_components/traverse/traverse.js',
+          'bower_components/lodash/lodash.js'
+        ],
+        helpers: 'test/unit/**/*.fixtures.js'
+      }
+    },
+
     protractor: {
       options: {
         configFile: './test/protractor/conf.js' // Default config file
@@ -166,6 +180,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'wiredep',
+    'jasmine',
     'setTestPort',
     'connect:test',
     'protractor'
