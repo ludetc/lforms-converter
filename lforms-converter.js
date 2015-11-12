@@ -26,11 +26,11 @@ _.extend(LFormsConverter.prototype, {
     // Setup handlers based on json path expressions.
     var parser = oboe(inputSource)
       .node({
-        'noRenderAllowed': this.handle_no_render_allowed.bind(this),
-        'formElements.*': this.handle_form_element.bind(this),
-        'naming': this.handle_naming.bind(this),
-        'answers.*': this.handle_answers.bind(this),
-        'uoms.*': this.handle_units.bind(this),
+        'noRenderAllowed': this.handleNoRenderAllowed.bind(this),
+        'formElements.*': this.handleFormElement.bind(this),
+        'naming': this.handleNaming.bind(this),
+        'answers.*': this.handleAnswers.bind(this),
+        'uoms.*': this.handleUnits.bind(this),
         // List out ignorables
         '__v': oboe.drop,
         'attachments': oboe.drop,
@@ -51,8 +51,8 @@ _.extend(LFormsConverter.prototype, {
         json.type = json.stewardOrg.name;
         delete json.stewardOrg;
         json.template = 'panelTableV';
-        rename_key(json, 'naming', 'name');
-        rename_key(json, 'formElements', 'items');
+        renameKey(json, 'naming', 'name');
+        renameKey(json, 'formElements', 'items');
         // Convert skip logic.
         doSkipLogic(json);
         // Remove any undefined
@@ -101,7 +101,7 @@ _.extend(LFormsConverter.prototype, {
    * @param {Array} path - path of param
    *
    */
-  handle_no_render_allowed: function(param, path) {
+  handleNoRenderAllowed: function(param, path) {
     if(param) {
       var err = new Error('Form not allowed to render');
       err.statusCode = 403;
@@ -116,7 +116,7 @@ _.extend(LFormsConverter.prototype, {
    * @param {Object} param - naming
    * @param {Array} path - path of param
    */
-  handle_naming: function(param, path) {
+  handleNaming: function(param, path) {
     if(param && param.length > 0) {
       return param[0].designation;
     }
@@ -131,7 +131,7 @@ _.extend(LFormsConverter.prototype, {
    * @param param {Object} param - formElements.*
    * @param path {Array} path - path of param
    */
-  handle_form_element: function(param, path) {
+  handleFormElement: function(param, path) {
     try {
       // Makeup a code
       var code = createQuestionCode(param);
@@ -167,8 +167,8 @@ _.extend(LFormsConverter.prototype, {
         param.units[0].default = true;
       }
       // Content of param are already changed. Change the key names if any
-      rename_key(param, 'formElements', 'items');
-      rename_key(param, 'cardinality', 'questionCardinality');
+      renameKey(param, 'formElements', 'items');
+      renameKey(param, 'cardinality', 'questionCardinality');
 
       return param;
     }
@@ -186,7 +186,7 @@ _.extend(LFormsConverter.prototype, {
    * @param {Object} param - uoms.*
    * @param {Array} path - path of param
    */
-  handle_units: function(param, path) {
+  handleUnits: function(param, path) {
     var ret = {};
     ret.name = param;
     return ret;
@@ -199,9 +199,9 @@ _.extend(LFormsConverter.prototype, {
    * @param {Object} param - answers.*
    * @param {Array} path - path of param
    */
-  handle_answers: function(param, path) {
-    rename_key(param, 'permissibleValue', 'code');
-    rename_key(param, 'valueMeaningName', 'text');
+  handleAnswers: function(param, path) {
+    renameKey(param, 'permissibleValue', 'code');
+    renameKey(param, 'valueMeaningName', 'text');
     return param;
   }
 
@@ -220,8 +220,8 @@ _.extend(LFormsConverter.prototype, {
  * @param {String} newkey
  * @returns none
  */
-function  rename_key(obj, oldkey, newkey) {
-  if(obj[oldkey]) {
+function  renameKey(obj, oldkey, newkey) {
+  if(obj.hasOwnProperty(oldkey)) {
     obj[newkey] = obj[oldkey];
     delete obj[oldkey];
   }
@@ -415,6 +415,7 @@ function traverseItems(item, visitCallback, ancestors) {
  *
  * . Visit the starting node.
  * . Visit the previous siblings of the starting node, closest to farthest.
+ * . Visit next siblings of starting node, closest to farthest.
  * . Visit parent node and repeat the above order.
  * . Repeat the above order until reaching root.
  *
@@ -448,6 +449,13 @@ function traverseItemsUpside(startingItem, visitCallback, ancestorsPath) {
         stop = visitCallback(sibling);
         return stop;
       });
+
+      if(!stop) {
+        parent.items.slice(index+1).some(function(sibling) {
+          stop = visitCallback(sibling);
+          return stop;
+        });
+      }
     }
 
     if(!stop) {
