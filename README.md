@@ -54,3 +54,5 @@ argument is an object with the following fields:
 * body - the response body for the error, if any
 * jsonBody - if the server’s error response was JSON, the parsed body
 
+## License
+See [LICENSE.md](LICENSE.md).
