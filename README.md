@@ -47,7 +47,8 @@ then constuct an LFormsData object from the form definition and assign it to the
 change.
 
 The final argument is a callback used in case of an error ocurring.  Its
-argument is an object with the following fields:
+argument is an object with the following fields (as documented in
+[oboe](http://oboejs.com/api#fail-event)):
 
 * thrown -  if an an error was thrown, this will contain that
 * statusCode - the status code, if the request got that far
