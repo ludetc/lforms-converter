@@ -4,7 +4,7 @@ allow it to display forms from the [National Institutes of
 Health](https://www.nih.gov) (NIH) [Common Data Elements
 (CDE)](https://www.nlm.nih.gov/cde/) Initiative.  The input format is a
 [JSON](http://json.org)-based form definition from the [NIH CDE
-Repostory](https://cde.nlm.nih.gov/), and the output is the LForms-style form
+Repository](https://cde.nlm.nih.gov/), and the output is the LForms-style form
 definition which can be given to LForms.
 
 ## Installation
