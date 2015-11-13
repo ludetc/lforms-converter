@@ -17,8 +17,8 @@ _.extend(LFormsConverter.prototype, {
   /**
    *  API to initiate the parsing
    *
-   * @param {Object} inputSource - A ReadableStream object, typically obtained
-   * from file stream or http response object.
+   * @param inputSource the URL for obtaining the CDE-style form definition which is to
+   *  be translated into an LForms form definition.
    */
   convert: function(inputSource, successCallback, failCallback) {
     var self = this;
