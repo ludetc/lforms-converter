@@ -1,16 +1,16 @@
 {
   "name": "lforms-converter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": [
     "app/lforms-converter.js"
   ],
   "dependencies": {
-    "oboe": "~2.1.2",
-    "traverse": "~0.6.6",
-    "lodash": "~3.10.0"
+    "oboe": "^2.1.2",
+    "traverse": "^0.6.6",
+    "lodash": "^3.10.0"
   },
   "devDependencies": {
-    "lforms": "~3.0.0"
+    "lforms": "^3.0.0"
   },
   "authors": [
     "Ajay Kanduru <akanduru@mail.nih.gov>"
