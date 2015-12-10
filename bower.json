@@ -2,7 +2,7 @@
   "name": "lforms-converter",
   "version": "1.0.1",
   "main": [
-    "app/lforms-converter.js"
+    "lforms-converter.js"
   ],
   "dependencies": {
     "oboe": "^2.1.2",
