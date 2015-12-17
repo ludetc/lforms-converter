@@ -12,11 +12,25 @@ describe('Test lforms-converter', function() {
       expect(lfData.items.length).toEqual(2);
       expect(lfData.items[0].items.length).toEqual(8);
       expect(lfData.items[1].items.length).toEqual(2);
+      expect(lfData.type).toEqual('CDE'); // Default
 
       done();
     }, function(err) {
       done(err);
     });
+  });
+
+  it('should do with caller supplied fields', function(done) {
+    converter = new LFormsConverter();
+    var options = {type: 'XXXXX', template: 'lformsPanelH'};
+    converter.convert('test/test-cde.json', function(lfData) {
+      expect(lfData.type).toEqual('XXXXX'); // Default
+      expect(lfData.template).toEqual('panelTableH'); // Default
+
+      done();
+    }, function(err) {
+      done(err);
+    }, {type: 'XXXXX', template: 'panelTableH'});
   });
 
 

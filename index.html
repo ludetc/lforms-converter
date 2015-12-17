@@ -10,8 +10,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css" />
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/select2/select2.css" />
     <link rel="stylesheet" href="bower_components/autocomplete-lhc/source/auto_completion.css" />
     <link rel="stylesheet" href="bower_components/lforms/app/styles/lforms.css" />
     <!-- endbower -->
@@ -37,20 +37,8 @@
   <script src="bower_components/traverse/traverse.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
   <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/json3/lib/json3.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-  <script src="bower_components/angular-touch/angular-touch.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
-  <script src="bower_components/select2/select2.js"></script>
-  <script src="bower_components/angular-ui-select2/src/select2.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
-  <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.js"></script>
   <script src="bower_components/autocomplete-lhc/source/prototype_api.js"></script>
   <script src="bower_components/autocomplete-lhc/source/effects.js"></script>
@@ -72,15 +60,15 @@
   <script src="bower_components/ngSmoothScroll/lib/angular-smooth-scroll.js"></script>
   <script src="bower_components/lforms/app/lforms.js"></script>
   <script src="bower_components/lforms/app/scripts/lforms-constants.js"></script>
-  <script src="bower_components/lforms/app/scripts/controllers/panel-table.js"></script>
+  <script src="bower_components/lforms/app/scripts/controllers/lforms-controller.js"></script>
   <script src="bower_components/lforms/app/scripts/directives/lf-date.js"></script>
   <script src="bower_components/lforms/app/scripts/lib/date.js"></script>
   <script src="bower_components/lforms/app/scripts/lib/js-class.js"></script>
   <script src="bower_components/lforms/app/scripts/lib/cross_browser.js"></script>
   <script src="bower_components/lforms/app/scripts/lib/util.js"></script>
   <script src="bower_components/lforms/app/scripts/lib/lforms-data.js"></script>
-  <script src="bower_components/lforms/app/scripts/services/selected-panel.js"></script>
   <script src="bower_components/lforms/app/lforms.tpl.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
   <!-- endbower -->
 
   <script src="lforms-converter.js"></script>
@@ -106,17 +94,19 @@
       converter.convert('test/test-cde.json',
         function(lfData) {
           scope.lfData = new LFormsData(lfData);
+          scope.lfData.setTemplateOptions({hideHeader: true});
           scope.$apply(scope.lfData);
         },
         function(err) {
           scope.error = err;
-        }
+        },
+        {}
       );
     }
   </script>
 
   <script type="text/ng-template" id="lforms-test.html">
-    <lforms-panel-v></lforms-panel-v>
+    <lforms lf-data="lfData"></lforms>
   </script>
 
   <div ng-view=""></div>
