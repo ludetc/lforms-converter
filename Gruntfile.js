@@ -12,9 +12,14 @@
 
 module.exports = function (grunt) {
 
-  grunt.loadNpmTasks('grunt-contrib-jasmine');
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
+  // Load grunt tasks automatically, when needed
+  require('jit-grunt')(grunt, {
+    jasmine: 'grunt-contrib-jasmine',
+    nsp: 'grunt-nsp'
+  });
+
+//  // Load grunt tasks automatically
+//  require('load-grunt-tasks')(grunt);
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
@@ -29,6 +34,12 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    nsp: {
+      package: grunt.file.readJSON('./package.json'),
+      shrinkwrap: grunt.file.readJSON('./npm-shrinkwrap.json')
+    },
+
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
