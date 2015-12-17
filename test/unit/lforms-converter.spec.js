@@ -12,11 +12,24 @@ describe('Test lforms-converter', function() {
       expect(lfData.items.length).toEqual(2);
       expect(lfData.items[0].items.length).toEqual(8);
       expect(lfData.items[1].items.length).toEqual(2);
+      expect(lfData.type).toEqual('CDE'); // Default
 
       done();
     }, function(err) {
       done(err);
     });
+  });
+
+  it('should do the same with caller supplied fields', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/test-cde.json', function(lfData) {
+      expect(lfData.type).toEqual('XXXXX');
+      expect(lfData.template).toEqual('form-view-b');
+
+      done();
+    }, function(err) {
+      done(err);
+    }, {type: 'XXXXX', template: 'form-view-b'});
   });
 
 

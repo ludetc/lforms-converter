@@ -17,10 +17,13 @@ _.extend(LFormsConverter.prototype, {
   /**
    *  API to initiate the parsing
    *
-   * @param inputSource the URL for obtaining the CDE-style form definition which is to
+   *  @param {String} inputSource - The URL for obtaining the CDE-style form definition which is to
    *  be translated into an LForms form definition.
+   *  @param {function} successCallback - Handler to capture converted object.
+   *  @param {function} failCallback - Error handler.
+   *  @param {Object}  additionalFields - Optionals fields to add or override to the converted form.
    */
-  convert: function(inputSource, successCallback, failCallback) {
+  convert: function(inputSource, successCallback, failCallback, additionalFields) {
     var self = this;
 
     // Setup handlers based on json path expressions.
@@ -48,15 +51,16 @@ _.extend(LFormsConverter.prototype, {
       // Do final adjustments to the structure.
       .done(function(json){
         json.code = json._id;
-        json.type = json.stewardOrg.name;
+        json.type = 'CDE';
         delete json.stewardOrg;
-        json.template = 'panelTableV';
+        json.template = '';
         renameKey(json, 'naming', 'name');
         renameKey(json, 'formElements', 'items');
         // Convert skip logic.
         doSkipLogic(json);
         // Remove any undefined
         removeArrayElements(json, undefined);
+        addAdditionalFields(json, additionalFields);
         successCallback(json);
       })
       .fail(function(errorReport) {
@@ -212,6 +216,21 @@ _.extend(LFormsConverter.prototype, {
  * Some utility functions
  ****************************************************************************
  */
+
+
+/**
+ * Add or overwrite optional form fields.
+ *
+ * @param json - Parsed lforms object
+ * @param options {Object}
+ */
+function addAdditionalFields(json, options) {
+  if(options) {
+    Object.keys(options).forEach(function(k) {
+      json[k] = options[k];
+    });
+  }
+}
 
 
 /**
