@@ -14,8 +14,11 @@ module.exports = function (grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
+    connect: 'grunt-contrib-connect',
     jasmine: 'grunt-contrib-jasmine',
-    nsp: 'grunt-nsp'
+    nsp: 'grunt-nsp',
+    protractor: "grunt-protractor-runner",
+    wiredep: 'grunt-wiredep'
   });
 
 //  // Load grunt tasks automatically
@@ -85,13 +88,14 @@ module.exports = function (grunt) {
         options: {
           open: true,
           middleware: function (connect) {
+            var serveStatic = require('serve-static');
             return [
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
-              connect.static('test/protractor'),
-              connect.static(appConfig.app),
+              serveStatic('test/protractor'),
+              serveStatic(appConfig.app),
               connect().use(require('morgan')('combined'))
             ];
           }
@@ -100,13 +104,14 @@ module.exports = function (grunt) {
       test: {
         options: {
           middleware: function (connect) {
+            var serveStatic = require('serve-static');
             return [
-              connect.static('test/protractor'),
+              serveStatic('test/protractor'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
