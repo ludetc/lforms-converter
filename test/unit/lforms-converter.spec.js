@@ -24,8 +24,8 @@ describe('Test lforms-converter', function() {
     converter = new LFormsConverter();
     var options = {type: 'XXXXX', template: 'lformsPanelH'};
     converter.convert('test/test-cde.json', function(lfData) {
-      expect(lfData.type).toEqual('XXXXX'); // Default
-      expect(lfData.template).toEqual('panelTableH'); // Default
+      expect(lfData.type).toEqual('XXXXX');
+      expect(lfData.template).toEqual('panelTableH');
 
       done();
     }, function(err) {

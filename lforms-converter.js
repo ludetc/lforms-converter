@@ -50,7 +50,7 @@ _.extend(LFormsConverter.prototype, {
         json.code = json._id;
         json.type = 'CDE';
         delete json.stewardOrg;
-        json.template = 'panelTableV';
+        json.template = '';
         renameKey(json, 'naming', 'name');
         renameKey(json, 'formElements', 'items');
         // Convert skip logic.
