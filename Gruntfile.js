@@ -21,9 +21,6 @@ module.exports = function (grunt) {
     wiredep: 'grunt-wiredep'
   });
 
-//  // Load grunt tasks automatically
-//  require('load-grunt-tasks')(grunt);
-
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
