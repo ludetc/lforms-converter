@@ -22,15 +22,14 @@ describe('Test lforms-converter', function() {
 
   it('should do with caller supplied fields', function(done) {
     converter = new LFormsConverter();
-    var options = {type: 'XXXXX', template: 'lformsPanelH'};
     converter.convert('test/test-cde.json', function(lfData) {
       expect(lfData.type).toEqual('XXXXX');
-      expect(lfData.template).toEqual('panelTableH');
+      expect(lfData.template).toEqual('form-view-b');
 
       done();
     }, function(err) {
       done(err);
-    }, {type: 'XXXXX', template: 'panelTableH'});
+    }, {type: 'XXXXX', template: 'form-view-b'});
   });
 
 

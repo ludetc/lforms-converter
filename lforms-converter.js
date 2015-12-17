@@ -17,8 +17,11 @@ _.extend(LFormsConverter.prototype, {
   /**
    *  API to initiate the parsing
    *
-   * @param inputSource the URL for obtaining the CDE-style form definition which is to
+   *  @param {String} inputSource - The URL for obtaining the CDE-style form definition which is to
    *  be translated into an LForms form definition.
+   *  @param {function} successCallback - Handler to capture converted object.
+   *  @param {function} failCallback - Error handler.
+   *  @param {Object}  additionalFields - Optionals fields to add or override to the converted form.
    */
   convert: function(inputSource, successCallback, failCallback, additionalFields) {
     var self = this;
