@@ -79,6 +79,7 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
+              connect.static('test/protractor'),
               connect.static(appConfig.app),
               connect().use(require('morgan')('combined'))
             ];
@@ -89,7 +90,7 @@ module.exports = function (grunt) {
         options: {
           middleware: function (connect) {
             return [
-              connect.static('test'),
+              connect.static('test/protractor'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
@@ -154,8 +155,7 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       app: {
-        src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//,
+        src: ['<%= yeoman.app %>/test/protractor/index.html'],
         devDependencies: true
       }
     }

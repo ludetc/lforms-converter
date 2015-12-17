@@ -1,6 +1,6 @@
 {
   "name": "lforms-converter",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": [
     "lforms-converter.js"
   ],
@@ -10,7 +10,8 @@
     "lodash": "^3.10.0"
   },
   "devDependencies": {
-    "lforms": "^3.0.0"
+    "lforms": "^4.0.0",
+    "angular-route": "^1.4.7"
   },
   "authors": [
     "Ajay Kanduru <akanduru@mail.nih.gov>"
