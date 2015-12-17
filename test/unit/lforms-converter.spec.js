@@ -20,7 +20,7 @@ describe('Test lforms-converter', function() {
     });
   });
 
-  it('should do with caller supplied fields', function(done) {
+  it('should do the same with caller supplied fields', function(done) {
     converter = new LFormsConverter();
     converter.convert('test/test-cde.json', function(lfData) {
       expect(lfData.type).toEqual('XXXXX');
