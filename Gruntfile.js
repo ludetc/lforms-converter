@@ -192,6 +192,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', [
+    'nsp',
     'wiredep',
     'jasmine',
     'setTestPort',
