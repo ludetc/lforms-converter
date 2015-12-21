@@ -30,6 +30,17 @@ exports.config = {
     // add jasmine spec reporter
     jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
 
+    // disable animation
+    // http://stackoverflow.com/questions/26584451/how-to-disable-animations-in-protractor-for-angular-js-appliction
+    var disableNgAnimate = function() {
+      angular
+        .module('disableNgAnimate', [])
+        .run(['$animate', function($animate) {
+          $animate.enabled(false);
+        }]);
+    };
+    browser.addMockModule('disableNgAnimate', disableNgAnimate);
+
   }
 
 };
