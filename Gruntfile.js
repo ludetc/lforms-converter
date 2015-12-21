@@ -1,6 +1,3 @@
-
-
-
 // Generated on 2014-10-20 using generator-angular 0.9.8
 'use strict';
 
@@ -16,8 +13,9 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     connect: 'grunt-contrib-connect',
     jasmine: 'grunt-contrib-jasmine',
+    jshint: 'grunt-contrib-jshint',
     nsp: 'grunt-nsp',
-    protractor: "grunt-protractor-runner",
+    protractor: 'grunt-protractor-runner',
     wiredep: 'grunt-wiredep'
   });
 
