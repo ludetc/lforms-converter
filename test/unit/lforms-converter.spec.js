@@ -33,6 +33,17 @@ describe('Test lforms-converter', function() {
   });
 
 
+  it('should convert instructions', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/XyPA3Ce5e.json', function(lfData) {
+      expect(lfData.items[0].codingInstructions).toEqual('to be answered by the patient');
+      done();
+    }, function(err) {
+      done(err);
+    });
+  });
+
+
   it('should test traverseItems() ', function() {
     var visit = [];
 

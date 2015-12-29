@@ -173,6 +173,7 @@ _.extend(LFormsConverter.prototype, {
       // Content of param are already changed. Change the key names if any
       renameKey(param, 'formElements', 'items');
       renameKey(param, 'cardinality', 'questionCardinality');
+      renameKey(param, 'instructions', 'codingInstructions');
 
       return param;
     }

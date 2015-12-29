@@ -35,4 +35,22 @@
         expect(page.skipLogicTarget2.isDisplayed()).toBeTruthy();
       });
     });
+
+
+    describe('should test skip logic', function () {
+
+      beforeAll(function() {
+        page.formSelector.click();
+        page.formSelector.sendKeys(protractor.Key.ARROW_DOWN);
+        page.formSelector.sendKeys(protractor.Key.TAB);
+      });
+
+
+      fit('should display coding instructions', function() {
+        expect(page.helpButton.isDisplayed()).toBeTruthy();
+        page.helpButton.click();
+        expect(page.instructions.isDisplayed()).toBeTruthy();
+      });
+    });
+
 });

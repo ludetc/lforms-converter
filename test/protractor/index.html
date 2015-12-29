@@ -85,28 +85,39 @@
           .otherwise({redirectTo: '/'});
       })
       .controller('lformsTestController', ['$scope', function ($scope) {
-        setLfData($scope);
+
+        $scope.testFormsPath = 'test/';
+        $scope.testForm = $scope.testFormsPath + 'test-cde.json';
+
+
+        $scope.setLfData = function() {
+          var converter = new LFormsConverter();
+          converter.convert($scope.testForm,
+            function(lfData) {
+              $scope.lfData = new LFormsData(lfData);
+              $scope.lfData.setTemplateOptions({hideHeader: true});
+              $scope.$apply($scope.lfData);
+            },
+            function(err) {
+              $scope.error = err;
+            },
+            {}
+          );
+        };
+
+        $scope.setLfData();
       }]);
-
-
-    function setLfData(scope) {
-      var converter = new LFormsConverter();
-      converter.convert('test/test-cde.json',
-        function(lfData) {
-          scope.lfData = new LFormsData(lfData);
-          scope.lfData.setTemplateOptions({hideHeader: true});
-          scope.$apply(scope.lfData);
-        },
-        function(err) {
-          scope.error = err;
-        },
-        {}
-      );
-    }
   </script>
 
   <script type="text/ng-template" id="lforms-test.html">
+
+    <select id="formSelector" ng-model="testForm" ng-change="setLfData()">
+      <option value="test/test-cde.json">Form with skip logic</option>
+      <option value="test/XyPA3Ce5e.json">Form with instructions</option>
+    </select>
+
     <lforms lf-data="lfData"></lforms>
+
   </script>
 
   <div ng-view=""></div>
