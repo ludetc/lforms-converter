@@ -6,11 +6,11 @@
 describe('Test lforms-converter', function() {
   var converter = null;
 
-  it('should fetch and convert test/test-cde.json', function(done) {
+  it('should fetch and convert test/bJ5Sm82g8.json', function(done) {
     converter = new LFormsConverter();
-    converter.convert('test/test-cde.json', function(lfData) {
+    converter.convert('test/bJ5Sm82g8.json', function(lfData) {
       expect(lfData.items.length).toEqual(2);
-      expect(lfData.items[0].items.length).toEqual(8);
+      expect(lfData.items[0].items.length).toEqual(10);
       expect(lfData.items[1].items.length).toEqual(2);
       expect(lfData.type).toEqual('CDE'); // Default
 
@@ -20,9 +20,10 @@ describe('Test lforms-converter', function() {
     });
   });
 
+
   it('should do the same with caller supplied fields', function(done) {
     converter = new LFormsConverter();
-    converter.convert('test/test-cde.json', function(lfData) {
+    converter.convert('test/bJ5Sm82g8.json', function(lfData) {
       expect(lfData.type).toEqual('XXXXX');
       expect(lfData.template).toEqual('form-view-b');
 
@@ -35,8 +36,23 @@ describe('Test lforms-converter', function() {
 
   it('should convert instructions', function(done) {
     converter = new LFormsConverter();
-    converter.convert('test/XyPA3Ce5e.json', function(lfData) {
-      expect(lfData.items[0].codingInstructions).toEqual('to be answered by the patient');
+    converter.convert('test/bJ5Sm82g8.json', function(lfData) {
+      expect(lfData.items[0].items[0].codingInstructions).toEqual(
+        decodeURIComponent('<p>Sample <b>rich text</b>%C2%A0instructions</p>'));
+      done();
+    }, function(err) {
+      done(err);
+    });
+  });
+
+
+  it('should convert restrictions', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/bJ5Sm82g8.json', function(lfData) {
+      expect(lfData.items[0].items[9].restrictions[0].name).toEqual('minInclusive');
+      expect(lfData.items[0].items[9].restrictions[0].value).toEqual(0);
+      expect(lfData.items[0].items[9].restrictions[1].name).toEqual('maxInclusive');
+      expect(lfData.items[0].items[9].restrictions[1].value).toEqual(100);
       done();
     }, function(err) {
       done(err);

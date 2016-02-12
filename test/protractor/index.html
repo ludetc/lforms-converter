@@ -19,6 +19,12 @@
 
     <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css" />
 
+    <style>
+      .error-message {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body ng-app="lformsTestApp">
   <!--[if lt IE 7]>
@@ -87,7 +93,10 @@
       .controller('lformsTestController', ['$scope', function ($scope) {
 
         $scope.testFormsPath = 'test/';
-        $scope.testForm = $scope.testFormsPath + 'test-cde.json';
+        $scope.testForm = $scope.testFormsPath + 'bJ5Sm82g8.json';
+        $scope.lformsOpts = {
+          hideHeader: false
+        };
 
 
         $scope.setLfData = function() {
@@ -95,7 +104,7 @@
           converter.convert($scope.testForm,
             function(lfData) {
               $scope.lfData = new LFormsData(lfData);
-              $scope.lfData.setTemplateOptions({hideHeader: true});
+              $scope.lfData.setTemplateOptions({hideHeader: false});
               $scope.$apply($scope.lfData);
             },
             function(err) {
@@ -112,11 +121,12 @@
   <script type="text/ng-template" id="lforms-test.html">
 
     <select id="formSelector" ng-model="testForm" ng-change="setLfData()">
-      <option value="test/test-cde.json">Form with skip logic</option>
-      <option value="test/XyPA3Ce5e.json">Form with instructions</option>
+      <option value="test/bJ5Sm82g8.json">Form with new changes</option>
     </select>
 
-    <lforms lf-data="lfData"></lforms>
+    <div ng-show="error" class="error-message">{{error}}</div>
+
+    <lforms lf-data="lfData" lf-options="lformsOpts"></lforms>
 
   </script>
 

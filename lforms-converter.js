@@ -41,8 +41,8 @@ _.extend(LFormsConverter.prototype, {
         'comments': oboe.drop,
         'created': oboe.drop,
         'createdBy': oboe.drop,
+        'hideLabel': oboe.drop,
         'history': oboe.drop,
-        'ids': oboe.drop,
         'isCopyrighted': oboe.drop,
         'properties': oboe.drop,
         'referenceDocuments': oboe.drop,
@@ -173,7 +173,26 @@ _.extend(LFormsConverter.prototype, {
       // Content of param are already changed. Change the key names if any
       renameKey(param, 'formElements', 'items');
       renameKey(param, 'cardinality', 'questionCardinality');
+
+      // Handle instructions
       renameKey(param, 'instructions', 'codingInstructions');
+
+      if(param.codingInstructions) {
+        param.codingInstructions = param.codingInstructions.value;
+      }
+
+      // Handle answerCardinality/required flag
+      if(q && q.required) {
+        var answerCardinality = createAnswerCardinality(q.required);
+        if(answerCardinality) {
+          param.answerCardinality = answerCardinality;
+        }
+      }
+
+      // Handle restrictions/datatypeNumber
+      if(q && q.datatypeNumber) {
+        param.restrictions = createRestrictions(q.datatypeNumber);
+      }
 
       return param;
     }
@@ -247,6 +266,54 @@ function  renameKey(obj, oldkey, newkey) {
   }
 }
 
+
+/**
+ * Create restrictions array.
+ *   For now, we know only number restrictions.
+ * @param datatypeNumber - Object from cde
+ * @returns {Array} - LForms array of restriction objects.
+ *   Returns null if input doesn't exists.
+ */
+function createRestrictions(datatypeNumber) {
+  var ret = null;
+  if(datatypeNumber) {
+    ret = [];
+    if(typeof datatypeNumber.minValue !== 'undefined') {
+      ret.push({
+        name: 'minInclusive',
+        value: datatypeNumber.minValue
+      });
+    }
+
+    if(typeof datatypeNumber.maxValue !== 'undefined') {
+      ret.push({
+        name: 'maxInclusive',
+        value: datatypeNumber.maxValue
+      });
+    }
+  }
+
+  return ret;
+}
+
+
+/**
+ * Create answer cardinality based on required flag.
+ *
+ * @param {boolean} requiredFlag- Flag from cde
+ * @returns {object} lforms answerCardinality object.
+ *   Returns null if input doesn't exist.
+ */
+function createAnswerCardinality(requiredFlag) {
+  var ret = null;
+  if(requiredFlag) {
+    ret = {};
+    ret.min = "1";
+    ret.max = "1";
+  }
+
+  return ret;
+}
 /**
  * Use tinyId for question code. Section headers do not have
  * an id.
@@ -254,13 +321,23 @@ function  renameKey(obj, oldkey, newkey) {
  * @param {Object} param - formElement
  */
 function createQuestionCode(param) {
-  var ret = '';
+  var ret = null;
   if(param.elementType === 'section') {
     // No id for headers. Make up something.
     ret = param.label.replace(/\s/g, '_');
   }
   else if (param.elementType === 'question') {
-    ret = param.question.cde.tinyId;
+    var idList = param.question.cde.ids;
+    for(var i = 0; idList && i < idList.length; i++) {
+      if(idList[i].source === "LOINC") {
+        ret = idList[i].id;
+        break;
+      }
+    }
+
+    if(!ret) {
+      ret = param.question.cde.tinyId;
+    }
   }
   else {
     ret = null;
@@ -274,22 +351,25 @@ function createQuestionCode(param) {
  * @param {Object} question - formElement.question
  */
 function createDataType(question) {
-  var ret = '';
-  if(question) {
-    switch(question.datatype) {
-      case 'Character':
+  var ret = 'ST';
+  if(question && question.datatype) {
+    switch(question.datatype.toLowerCase()) {
+      case 'character':
         ret = 'ST';
         break;
-      case 'Value List':
+      case 'value list':
         ret = 'CNE';
         break;
-      case 'NUMBER':
+      case 'integer':
+        ret = 'INT';
+        break;
+      case 'number':
         ret = 'REAL';
         break;
-      case 'Float':
+      case 'float':
         ret = 'REAL';
         break;
-      case 'Date':
+      case 'date':
         ret = 'DT';
         break;
       default:
