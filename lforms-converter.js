@@ -144,7 +144,8 @@ _.extend(LFormsConverter.prototype, {
         return oboe.drop();
       }
 
-      param.questionCode = code;
+      param.questionCode = code.questionCode;
+      param.questionCodeSystem = code.questionCodeSystem;
       // cde question is different than item.question.
       var q = param.question;
       // cde label is item.question
@@ -321,22 +322,25 @@ function createAnswerCardinality(requiredFlag) {
  * @param {Object} param - formElement
  */
 function createQuestionCode(param) {
-  var ret = null;
+  var ret = {};
   if(param.elementType === 'section') {
     // No id for headers. Make up something.
-    ret = param.label.replace(/\s/g, '_');
+    ret.questionCodeSystem = null;
+    ret.questionCode = param.label.replace(/\s/g, '_');
   }
   else if (param.elementType === 'question') {
     var idList = param.question.cde.ids;
     for(var i = 0; idList && i < idList.length; i++) {
       if(idList[i].source === "LOINC") {
-        ret = idList[i].id;
+        ret.questionCodeSystem = idList[i].source;
+        ret.questionCode = idList[i].id;
         break;
       }
     }
 
-    if(!ret) {
-      ret = param.question.cde.tinyId;
+    if(!ret.questionCode) {
+      ret.questionCodeSystem = null;
+      ret.questionCode = param.question.cde.tinyId;
     }
   }
   else {
