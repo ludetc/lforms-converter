@@ -13,7 +13,29 @@
 
 
     it('should display converted lforms widget', function() {
-      expect(page.panelTitle.getText()).toBe('Test Form');
+      expect(page.panelTitle.getText()).toBe('Test LForms');
+    });
+
+
+    it('should display LOINC code for LOINC item', function() {
+      page.displayCodeCheckbox.click();
+      expect(page.loincCodeLabel.isPresent()).toBeTruthy();
+    });
+
+
+    it('should display number input boxes', function() {
+      var el = page.itemIntType.getWebElement();
+      expect(el.getAttribute('ng-switch-when')).toBe('INT');
+      expect(el.getAttribute('placeholder')).toBe('Type a number');
+      el = page.itemNumberType.getWebElement();
+      expect(el.getAttribute('ng-switch-when')).toBe('REAL');
+      expect(el.getAttribute('placeholder')).toBe('Type a number');
+    });
+
+
+    it('should display required popup', function() {
+      page.itemRequired.click();
+      expect(page.itemRequiredPopup.isDisplayed()).toBeTruthy();
     });
 
 
@@ -38,16 +60,6 @@
 
 
     describe('should test help popover', function () {
-
-      /**
-       * Use a form with help/instructions field
-       */
-      beforeAll(function() {
-        page.formSelector.click();
-        page.formSelector.sendKeys(protractor.Key.ARROW_DOWN);
-        page.formSelector.sendKeys(protractor.Key.TAB);
-      });
-
 
       it('should display coding instructions', function() {
         expect(page.helpButton.isDisplayed()).toBeTruthy();
