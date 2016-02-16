@@ -61,17 +61,6 @@
 
     describe('should test help popover', function () {
 
-      /**
-       * Use a form with help/instructions field
-       */
-      /*
-      beforeAll(function() {
-        page.formSelector.click();
-        page.formSelector.sendKeys(protractor.Key.ARROW_DOWN);
-        page.formSelector.sendKeys(protractor.Key.TAB);
-      });
-*/
-
       it('should display coding instructions', function() {
         expect(page.helpButton.isDisplayed()).toBeTruthy();
         page.helpButton.click();

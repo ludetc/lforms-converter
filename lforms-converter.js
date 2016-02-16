@@ -161,19 +161,28 @@ _.extend(LFormsConverter.prototype, {
       // Map datatype
       param.dataType = createDataType(q);
       // Move all answerlists to its own hash
-      if (q && q.answers && q.answers.length > 0) {
-        param.answers = q.answers;
+      if (q) {
+        if (q.answers && q.answers.length > 0) {
+          param.answers = q.answers;
+        }
+        // Handle units
+        if (q.uoms && q.uoms.length > 0) {
+          param.units = q.uoms;
+          // Make first unit the default.
+          param.units[0].default = true;
+        }
+        // Handle answerCardinality/required flag
+        if(q.required) {
+          var answerCardinality = createAnswerCardinality(q.required);
+          if(answerCardinality) {
+            param.answerCardinality = answerCardinality;
+          }
+        }
+        // Handle restrictions/datatypeNumber
+        if(q.datatypeNumber) {
+          param.restrictions = createRestrictions(q.datatypeNumber);
+        }
       }
-
-      // Handle units
-      if (q && q.uoms && q.uoms.length > 0) {
-        param.units = q.uoms;
-        // Make first unit the default.
-        param.units[0].default = true;
-      }
-      // Content of param are already changed. Change the key names if any
-      renameKey(param, 'formElements', 'items');
-      renameKey(param, 'cardinality', 'questionCardinality');
 
       // Handle instructions
       renameKey(param, 'instructions', 'codingInstructions');
@@ -182,18 +191,9 @@ _.extend(LFormsConverter.prototype, {
         param.codingInstructions = param.codingInstructions.value;
       }
 
-      // Handle answerCardinality/required flag
-      if(q && q.required) {
-        var answerCardinality = createAnswerCardinality(q.required);
-        if(answerCardinality) {
-          param.answerCardinality = answerCardinality;
-        }
-      }
-
-      // Handle restrictions/datatypeNumber
-      if(q && q.datatypeNumber) {
-        param.restrictions = createRestrictions(q.datatypeNumber);
-      }
+      // Content of param are already changed. Change the key names if any
+      renameKey(param, 'cardinality', 'questionCardinality');
+      renameKey(param, 'formElements', 'items');
 
       return param;
     }
