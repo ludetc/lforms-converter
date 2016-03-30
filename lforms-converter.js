@@ -188,7 +188,11 @@ _.extend(LFormsConverter.prototype, {
       renameKey(param, 'instructions', 'codingInstructions');
 
       if(param.codingInstructions) {
-        param.codingInstructions = param.codingInstructions.value;
+        if(param.codingInstructions.valueFormat === 'html') {
+          param.codingInstructions = param.codingInstructions.value;
+        } else {
+          param.codingInstructions = _.escape(param.codingInstructions.value);
+        }
       }
 
       // Content of param are already changed. Change the key names if any

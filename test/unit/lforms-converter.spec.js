@@ -39,6 +39,8 @@ describe('Test lforms-converter', function() {
     converter.convert('test/bJ5Sm82g8.json', function(lfData) {
       expect(lfData.items[0].items[0].codingInstructions).toEqual(
         decodeURIComponent('<p>Sample <b>rich text</b>%C2%A0instructions</p>'));
+      // Escape plain text format instructions
+      expect(lfData.items[0].items[1].codingInstructions).toEqual("Plain &lt;span color=&quot;red&quot;&gt;&#39;text&#39;&#96;&lt;/span&gt; instructions");
       done();
     }, function(err) {
       done(err);
