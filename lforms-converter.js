@@ -188,10 +188,9 @@ _.extend(LFormsConverter.prototype, {
       renameKey(param, 'instructions', 'codingInstructions');
 
       if(param.codingInstructions) {
-        if(param.codingInstructions.valueFormat === 'html') {
-          param.codingInstructions = param.codingInstructions.value;
-        } else {
-          param.codingInstructions = _.escape(param.codingInstructions.value);
+        param.codingInstructions = param.codingInstructions.value;
+        if(param.codingInstructions.valueFormat) {
+          param.codingInstructionsFormat = param.codingInstructions.valueFormat;
         }
       }
 
@@ -570,5 +569,16 @@ function traverseItemsUpside(startingItem, visitCallback, ancestorsPath) {
       // Recurse through ancestors
       traverseItemsUpside(parent, visitCallback, ancestors);
     }
+  }
+  
+  
+  function isHtmlEntity(str) {
+    return /^&(#([\d]+|x[\da-e]+)|[a-z]+);/.test(str);
+  }
+
+  function escape(str, escapeCharacterSet) {
+    var ret = str;
+    escapeCharacterSet.forEach('');
+    return ret;
   }
 }
