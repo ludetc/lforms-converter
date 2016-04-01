@@ -570,15 +570,4 @@ function traverseItemsUpside(startingItem, visitCallback, ancestorsPath) {
       traverseItemsUpside(parent, visitCallback, ancestors);
     }
   }
-  
-  
-  function isHtmlEntity(str) {
-    return /^&(#([\d]+|x[\da-e]+)|[a-z]+);/.test(str);
-  }
-
-  function escape(str, escapeCharacterSet) {
-    var ret = str;
-    escapeCharacterSet.forEach('');
-    return ret;
-  }
 }
