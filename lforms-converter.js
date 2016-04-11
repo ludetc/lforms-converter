@@ -189,6 +189,9 @@ _.extend(LFormsConverter.prototype, {
 
       if(param.codingInstructions) {
         param.codingInstructions = param.codingInstructions.value;
+        if(param.codingInstructions.valueFormat) {
+          param.codingInstructionsFormat = param.codingInstructions.valueFormat;
+        }
       }
 
       // Content of param are already changed. Change the key names if any
