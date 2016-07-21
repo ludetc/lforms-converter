@@ -59,7 +59,20 @@ describe('Test lforms-converter', function() {
     });
   });
 
-
+  it('should convert displayProfiles (matrix display for answer lists)', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/Q1S9NhOK8e.json', function(lfData) {
+      //console.log(JSON.stringify(lfData, null, 2));
+      expect(lfData.templateOptions).toEqual({displayControl: {questionLayout: 'matrix'}});
+      expect(lfData.items[0].displayControl).toEqual({questionLayout: 'matrix'});
+      expect(lfData.items[1].displayControl).toEqual({questionLayout: 'matrix'});
+      expect(lfData.template).toEqual('table');
+      done();
+    }, function(err) {
+      done(err);
+    });
+  });
+  
   it('should test traverseItems() ', function() {
     var visit = [];
 
