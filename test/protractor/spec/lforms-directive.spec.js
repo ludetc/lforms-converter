@@ -35,6 +35,7 @@
 
     it('should display required popup', function() {
       page.itemRequired.click();
+      page.itemRequired.sendKeys(' ');
       expect(page.itemRequiredPopup.isDisplayed()).toBeTruthy();
     });
 

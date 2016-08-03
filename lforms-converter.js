@@ -61,7 +61,9 @@ _.extend(LFormsConverter.prototype, {
         delete json.displayProfiles;
         delete json.ids;
         delete json.tinyId;
-        json.template = '';
+        if(typeof self.template !== 'undefined') {
+          json.template = self.template;
+        }
         renameKey(json, 'naming', 'name');
         renameKey(json, 'formElements', 'items');
         // Convert skip logic.
@@ -107,6 +109,7 @@ _.extend(LFormsConverter.prototype, {
   handleDisplayProfiles: function (param, path) {
     if(param && param.length > 0 && param[0].sectionsAsMatrix) {
       // Save to 'this'. It will be used in form element handler.
+      this.template = 'list';
       this.templateOptions = {displayControl: {questionLayout: 'matrix'}};
     }
     return oboe.drop();
