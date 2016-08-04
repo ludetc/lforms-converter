@@ -15,7 +15,20 @@ var DemoPage = function() {
     itemNumberType: element(by.id('/Your_Health_Information/z93OErjdWOh/1/1')),
     itemRequired: element(by.id('/Your_Health_Information/tXwaaWzu1Od/1/1')),
     itemRequiredPopup: element(by.cssContainingText('div.validation-error', 'requires a value')),
-    matrixRadioButtons: element(by.css('div.lf-form-body input[type="radio"]'))
+    matrixRadioButtons: element.all(by.css('div.lf-form-body input[type="radio"]')),
+
+    /**
+     * Wait until an element is displayed. 
+     * 
+     * Used to wait for error popup messages. Copied from lforms test scripts.
+     * 
+     * @param ele
+     */
+    waitForDisplayed: function (ele) {
+      browser.wait(function() {
+        return ele.isDisplayed();
+      }, 5000);
+    }
 
   };
 };
