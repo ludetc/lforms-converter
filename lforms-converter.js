@@ -153,7 +153,7 @@ _.extend(LFormsConverter.prototype, {
       delete param.label;
       // cde element type determines item.header
       param.header = false;
-      if (param.elementType === 'section') {
+      if (param.elementType === 'section' || param.elementType === 'form') {
         param.header = true;
       }
       delete param.elementType;
@@ -320,7 +320,7 @@ function createAnswerCardinality(q) {
  */
 function createQuestionCode(param) {
   var ret = {};
-  if(param.elementType === 'section') {
+  if(param.elementType === 'section' || param.elementType === 'form') {
     // No id for headers. Make up something.
     ret.questionCodeSystem = null;
     ret.questionCode = param.label.replace(/\s/g, '_');
