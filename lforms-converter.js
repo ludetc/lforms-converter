@@ -172,12 +172,10 @@ _.extend(LFormsConverter.prototype, {
           param.units[0].default = true;
         }
         // Handle answerCardinality/required flag
-        if(q.required) {
-          var answerCardinality = createAnswerCardinality(q.required);
-          if(answerCardinality) {
-            param.answerCardinality = answerCardinality;
-          }
-        }
+        //var answerCardinality = createAnswerCardinality(q);
+        //if(answerCardinality) {
+        param.answerCardinality = createAnswerCardinality(q);
+        //}
         // Handle restrictions/datatypeNumber
         if(q.datatypeNumber) {
           param.restrictions = createRestrictions(q.datatypeNumber);
@@ -308,15 +306,11 @@ function createRestrictions(datatypeNumber) {
  * @returns {object} lforms answerCardinality object.
  *   Returns null if input doesn't exist.
  */
-function createAnswerCardinality(requiredFlag) {
-  var ret = null;
-  if(requiredFlag) {
-    ret = {};
-    ret.min = "1";
-    ret.max = "1";
-  }
-
-  return ret;
+function createAnswerCardinality(q) {
+  return {
+    min: q.required?"1":0,
+    max: q.multiselect?"*":"1"
+  };
 }
 /**
  * Use tinyId for question code. Section headers do not have
