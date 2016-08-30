@@ -179,11 +179,10 @@ _.extend(LFormsConverter.prototype, {
           // Make first unit the default.
           param.units[0].default = true;
         }
+
         // Handle answerCardinality/required flag
-        //var answerCardinality = createAnswerCardinality(q);
-        //if(answerCardinality) {
         param.answerCardinality = createAnswerCardinality(q);
-        //}
+
         // Handle restrictions/datatypeNumber
         if(q.datatypeNumber) {
           param.restrictions = createRestrictions(q.datatypeNumber);
