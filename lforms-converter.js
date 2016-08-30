@@ -317,7 +317,7 @@ function createRestrictions(datatypeNumber) {
  */
 function createAnswerCardinality(q) {
   return {
-    min: q.required?"1":0,
+    min: q.required ? "1": "0",
     max: q.multiselect?"*":"1"
   };
 }

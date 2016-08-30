@@ -72,6 +72,42 @@ describe('Test lforms-converter', function() {
   });
 
 
+  it('should convert "required" to min cardinality', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/my8_b85WHM.json', function(lfData) {
+      var questionList = lfData.items[0].items;
+      var codeToQuestion = {};
+      for (var i=0, len=questionList.length; i<len; ++i)
+        codeToQuestion[questionList[i].questionCode] = questionList[i];
+      var nonReqQ = codeToQuestion['57716-3'];
+      expect(nonReqQ.answerCardinality.min).toBe('0');
+      var requiredQ = codeToQuestion['57713-0'];
+      expect(requiredQ.answerCardinality.min).toBe('1');
+      done();
+    }, function(err) {
+      done.fail(JSON.stringify(err));
+    });
+  });
+
+
+  it('should convert "multiselect" to max cardinality', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/my8_b85WHM.json', function(lfData) {
+      var questionList = lfData.items[0].items;
+      var codeToQuestion = {};
+      for (var i=0, len=questionList.length; i<len; ++i)
+        codeToQuestion[questionList[i].questionCode] = questionList[i];
+      var nonMultiQ = codeToQuestion['57716-3'];
+      expect(nonMultiQ.answerCardinality.max).toBe('1');
+      var multiQ = codeToQuestion['57713-0'];
+      expect(multiQ.answerCardinality.max).toBe('*');
+      done();
+    }, function(err) {
+      done.fail(JSON.stringify(err));
+    });
+  });
+
+
   it('should test traverseItems() ', function() {
     var visit = [];
 
