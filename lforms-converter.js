@@ -310,7 +310,8 @@ function createRestrictions(datatypeNumber) {
 /**
  * Create answer cardinality based on required flag.
  *
- * @param {boolean} requiredFlag- Flag from cde
+ * @param {object} q A hash from the CDE format, containing keys for "required"
+ *  (a boolean) and "multiselect" (another boolean).
  * @returns {object} lforms answerCardinality object.
  *   Returns null if input doesn't exist.
  */
@@ -320,6 +321,8 @@ function createAnswerCardinality(q) {
     max: q.multiselect?"*":"1"
   };
 }
+
+
 /**
  * Use tinyId for question code. Section headers do not have
  * an id.
