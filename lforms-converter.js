@@ -27,6 +27,38 @@ _.extend(LFormsConverter.prototype, {
     var self = this;
 
     // Setup handlers based on json path expressions.
+    function success(json) {
+      // Do final adjustments to the structure.
+      json.code = json._id;
+      json.type = 'CDE';
+      delete json.stewardOrg;
+      json.template = '';
+      renameKey(json, 'naming', 'name');
+      renameKey(json, 'formElements', 'items');
+      // Convert skip logic.
+      doSkipLogic(json);
+      // Remove any undefined
+      removeArrayElements(json, undefined);
+      addAdditionalFields(json, additionalFields);
+      successCallback(json);
+      parser.removeListener('done', success);
+      parser.removeListener('fail', failed);
+    }
+
+    function failed(errorReport) {
+      // Something is wrong. Abort further parsing and throw the error
+      errorReport.statusCode = errorReport.statusCode ? errorReport.statusCode :
+                               (errorReport.thrown ? errorReport.thrown.statusCode : 500);
+      errorReport.body = errorReport.body || (errorReport.thrown ?
+        errorReport.thrown.message : undefined);
+      parser.abort();
+      if(failCallback) {
+        failCallback(errorReport);
+      }
+      parser.removeListener('done', success);
+      parser.removeListener('fail', failed);
+    }
+
     var parser = oboe(inputSource)
       .node({
         'noRenderAllowed': this.handleNoRenderAllowed.bind(this),
@@ -48,32 +80,8 @@ _.extend(LFormsConverter.prototype, {
         'referenceDocuments': oboe.drop,
         'registrationState': oboe.drop
       })
-      // Do final adjustments to the structure.
-      .done(function(json){
-        json.code = json._id;
-        json.type = 'CDE';
-        delete json.stewardOrg;
-        json.template = '';
-        renameKey(json, 'naming', 'name');
-        renameKey(json, 'formElements', 'items');
-        // Convert skip logic.
-        doSkipLogic(json);
-        // Remove any undefined
-        removeArrayElements(json, undefined);
-        addAdditionalFields(json, additionalFields);
-        successCallback(json);
-      })
-      .fail(function(errorReport) {
-        // Something is wrong. Abort further parsing and throw the error
-        errorReport.statusCode = errorReport.statusCode ? errorReport.statusCode :
-                                 (errorReport.thrown ? errorReport.thrown.statusCode : 500);
-        errorReport.body = errorReport.body ||
-                                 (errorReport.thrown ? errorReport.thrown.message : undefined);
-        parser.abort();
-        if(failCallback) {
-          failCallback(errorReport);
-        }
-      });
+      .done(success)
+      .fail(failed);
   },
 
 

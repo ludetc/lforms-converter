@@ -16,10 +16,9 @@ describe('Test lforms-converter', function() {
 
       done();
     }, function(err) {
-      done(err);
+      done.fail(JSON.stringify(err));
     });
   });
-
 
   it('should do the same with caller supplied fields', function(done) {
     converter = new LFormsConverter();
@@ -29,7 +28,7 @@ describe('Test lforms-converter', function() {
 
       done();
     }, function(err) {
-      done(err);
+      done.fail(JSON.stringify(err));
     }, {type: 'XXXXX', template: 'form-view-b'});
   });
 
@@ -41,7 +40,7 @@ describe('Test lforms-converter', function() {
         decodeURIComponent('<p>Sample <b>rich text</b>%C2%A0instructions</p>'));
       done();
     }, function(err) {
-      done(err);
+      done.fail(JSON.stringify(err));
     });
   });
 
@@ -55,7 +54,20 @@ describe('Test lforms-converter', function() {
       expect(lfData.items[0].items[9].restrictions[1].value).toEqual(100);
       done();
     }, function(err) {
-      done(err);
+      done.fail(JSON.stringify(err));
+    });
+  });
+
+
+  it('should regard elementType "form" as a section', function(done) {
+    converter = new LFormsConverter();
+    converter.convert('test/X1WzZIqZBf.json', function(lfData) {
+      expect(lfData.items[0].items[0].question).toEqual(
+        'Congenital adrenal hyperplasia newborn screening panel');
+      expect(lfData.items[0].items[0].header).toBe(true);
+      done();
+    }, function(err) {
+      done.fail(JSON.stringify(err));
     });
   });
 
