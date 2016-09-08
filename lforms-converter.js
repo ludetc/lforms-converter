@@ -151,11 +151,9 @@ _.extend(LFormsConverter.prototype, {
       // cde label is item.question
       param.question = param.label;
       delete param.label;
+
       // cde element type determines item.header
-      param.header = false;
-      if (param.elementType === 'section' || param.elementType === 'form') {
-        param.header = true;
-      }
+      param.header = param.elementType === 'section' || param.elementType === 'form';
       delete param.elementType;
 
       // Map datatype
@@ -327,13 +325,11 @@ function createQuestionCode(param) {
   }
   else if (param.elementType === 'question') {
     var idList = param.question.cde.ids;
-    if (idList) {
-      for(var i = 0; idList && i < idList.length; i++) {
-        if(idList[i].source === "LOINC") {
-          ret.questionCodeSystem = idList[i].source;
-          ret.questionCode = idList[i].id;
-          break;
-        }
+    for(var i = 0; idList && i < idList.length; i++) {
+      if(idList[i].source === "LOINC") {
+        ret.questionCodeSystem = idList[i].source;
+        ret.questionCode = idList[i].id;
+        break;
       }
     }
 
