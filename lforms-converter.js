@@ -327,11 +327,13 @@ function createQuestionCode(param) {
   }
   else if (param.elementType === 'question') {
     var idList = param.question.cde.ids;
-    for(var i = 0; idList && i < idList.length; i++) {
-      if(idList[i].source === "LOINC") {
-        ret.questionCodeSystem = idList[i].source;
-        ret.questionCode = idList[i].id;
-        break;
+    if (idList) {
+      for(var i = 0; idList && i < idList.length; i++) {
+        if(idList[i].source === "LOINC") {
+          ret.questionCodeSystem = idList[i].source;
+          ret.questionCode = idList[i].id;
+          break;
+        }
       }
     }
 
