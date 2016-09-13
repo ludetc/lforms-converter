@@ -61,9 +61,11 @@ _.extend(LFormsConverter.prototype, {
         delete json.displayProfiles;
         delete json.ids;
         delete json.tinyId;
-        if(typeof self.template !== 'undefined') {
-          json.template = self.template;
-        }
+        // TODO 
+        // LForms currently supports answer list matrix display only under 'list' template.
+        // Hard code template to list type for now and 
+        // revisit this after LForms supports matrix display under 'table' style template.
+        json.template = 'list';
         renameKey(json, 'naming', 'name');
         renameKey(json, 'formElements', 'items');
         // Convert skip logic.
@@ -181,7 +183,6 @@ _.extend(LFormsConverter.prototype, {
         param.displayControl = this.templateOptions && this.templateOptions.displayControl ? this.templateOptions.displayControl : null;
       }
       delete param.elementType;
-      //param.displayControl = this.templateOptions && this.templateOptions.displayControl ? this.templateOptions.displayControl : null;
 
       // Map datatype
       param.dataType = createDataType(q);
