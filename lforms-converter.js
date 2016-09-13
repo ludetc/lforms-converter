@@ -26,7 +26,7 @@ _.extend(LFormsConverter.prototype, {
   convert: function(inputSource, successCallback, failCallback, additionalFields) {
     var self = this;
 
-    // Setup handlers based on json path expressions.
+    // Called when the oboe parsing is successful
     function success(json) {
       // Do final adjustments to the structure.
       json.code = json._id;
@@ -45,6 +45,7 @@ _.extend(LFormsConverter.prototype, {
       parser.removeListener('fail', failed);
     }
 
+    // Called when the oboe parsing fails
     function failed(errorReport) {
       // Something is wrong. Abort further parsing and throw the error
       errorReport.statusCode = errorReport.statusCode ? errorReport.statusCode :
@@ -59,6 +60,7 @@ _.extend(LFormsConverter.prototype, {
       parser.removeListener('fail', failed);
     }
 
+    // Setup handlers based on json path expressions.
     var parser = oboe(inputSource)
       .node({
         'noRenderAllowed': this.handleNoRenderAllowed.bind(this),
@@ -317,7 +319,7 @@ function createRestrictions(datatypeNumber) {
 function createAnswerCardinality(q) {
   return {
     min: q.required ? "1": "0",
-    max: q.multiselect?"*":"1"
+    max: q.multiselect ? "*" : "1"
   };
 }
 
