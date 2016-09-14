@@ -26,6 +26,40 @@ _.extend(LFormsConverter.prototype, {
   convert: function(inputSource, successCallback, failCallback, additionalFields) {
     var self = this;
 
+    // Called when the oboe parsing is successful
+    function success(json) {
+      // Do final adjustments to the structure.
+      json.code = json._id;
+      json.type = 'CDE';
+      delete json.stewardOrg;
+      json.template = '';
+      renameKey(json, 'naming', 'name');
+      renameKey(json, 'formElements', 'items');
+      // Convert skip logic.
+      doSkipLogic(json);
+      // Remove any undefined
+      removeArrayElements(json, undefined);
+      addAdditionalFields(json, additionalFields);
+      successCallback(json);
+      parser.removeListener('done', success);
+      parser.removeListener('fail', failed);
+    }
+
+    // Called when the oboe parsing fails
+    function failed(errorReport) {
+      // Something is wrong. Abort further parsing and throw the error
+      errorReport.statusCode = errorReport.statusCode ? errorReport.statusCode :
+                               (errorReport.thrown ? errorReport.thrown.statusCode : 500);
+      errorReport.body = errorReport.body || (errorReport.thrown ?
+        errorReport.thrown.message : undefined);
+      parser.abort();
+      if(failCallback) {
+        failCallback(errorReport);
+      }
+      parser.removeListener('done', success);
+      parser.removeListener('fail', failed);
+    }
+
     // Setup handlers based on json path expressions.
     var parser = oboe(inputSource)
       .node({
@@ -48,32 +82,8 @@ _.extend(LFormsConverter.prototype, {
         'referenceDocuments': oboe.drop,
         'registrationState': oboe.drop
       })
-      // Do final adjustments to the structure.
-      .done(function(json){
-        json.code = json._id;
-        json.type = 'CDE';
-        delete json.stewardOrg;
-        json.template = '';
-        renameKey(json, 'naming', 'name');
-        renameKey(json, 'formElements', 'items');
-        // Convert skip logic.
-        doSkipLogic(json);
-        // Remove any undefined
-        removeArrayElements(json, undefined);
-        addAdditionalFields(json, additionalFields);
-        successCallback(json);
-      })
-      .fail(function(errorReport) {
-        // Something is wrong. Abort further parsing and throw the error
-        errorReport.statusCode = errorReport.statusCode ? errorReport.statusCode :
-                                 (errorReport.thrown ? errorReport.thrown.statusCode : 500);
-        errorReport.body = errorReport.body ||
-                                 (errorReport.thrown ? errorReport.thrown.message : undefined);
-        parser.abort();
-        if(failCallback) {
-          failCallback(errorReport);
-        }
-      });
+      .done(success)
+      .fail(failed);
   },
 
 
@@ -153,7 +163,7 @@ _.extend(LFormsConverter.prototype, {
       delete param.label;
       // cde element type determines item.header
       param.header = false;
-      if (param.elementType === 'section') {
+      if (param.elementType === 'section' || param.elementType === 'form') {
         param.header = true;
       }
       delete param.elementType;
@@ -171,13 +181,10 @@ _.extend(LFormsConverter.prototype, {
           // Make first unit the default.
           param.units[0].default = true;
         }
+
         // Handle answerCardinality/required flag
-        if(q.required) {
-          var answerCardinality = createAnswerCardinality(q.required);
-          if(answerCardinality) {
-            param.answerCardinality = answerCardinality;
-          }
-        }
+        param.answerCardinality = createAnswerCardinality(q);
+
         // Handle restrictions/datatypeNumber
         if(q.datatypeNumber) {
           param.restrictions = createRestrictions(q.datatypeNumber);
@@ -304,20 +311,19 @@ function createRestrictions(datatypeNumber) {
 /**
  * Create answer cardinality based on required flag.
  *
- * @param {boolean} requiredFlag- Flag from cde
+ * @param {object} q A hash from the CDE format, containing keys for "required"
+ *  (a boolean) and "multiselect" (another boolean).
  * @returns {object} lforms answerCardinality object.
  *   Returns null if input doesn't exist.
  */
-function createAnswerCardinality(requiredFlag) {
-  var ret = null;
-  if(requiredFlag) {
-    ret = {};
-    ret.min = "1";
-    ret.max = "1";
-  }
-
-  return ret;
+function createAnswerCardinality(q) {
+  return {
+    min: q.required ? "1": "0",
+    max: q.multiselect ? "*" : "1"
+  };
 }
+
+
 /**
  * Use tinyId for question code. Section headers do not have
  * an id.
@@ -326,7 +332,7 @@ function createAnswerCardinality(requiredFlag) {
  */
 function createQuestionCode(param) {
   var ret = {};
-  if(param.elementType === 'section') {
+  if(param.elementType === 'section' || param.elementType === 'form') {
     // No id for headers. Make up something.
     ret.questionCodeSystem = null;
     ret.questionCode = param.label.replace(/\s/g, '_');
