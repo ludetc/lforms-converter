@@ -10,7 +10,7 @@
     "lodash": "^3.10.0"
   },
   "devDependencies": {
-    "lforms": "^7.0.0",
+    "lforms": "^7.6.0",
     "angular-route": "^1.4.7"
   },
   "authors": [
