@@ -32,7 +32,7 @@ _.extend(LFormsConverter.prototype, {
       json.code = json._id;
       json.type = 'CDE';
       delete json.stewardOrg;
-      json.template = '';
+      json.template = 'list';
       renameKey(json, 'naming', 'name');
       renameKey(json, 'formElements', 'items');
       // Convert skip logic.
@@ -63,6 +63,7 @@ _.extend(LFormsConverter.prototype, {
     // Setup handlers based on json path expressions.
     var parser = oboe(inputSource)
       .node({
+        'displayProfiles': this.handleDisplayProfiles.bind(this),
         'noRenderAllowed': this.handleNoRenderAllowed.bind(this),
         'formElements.*': this.handleFormElement.bind(this),
         'naming': this.handleNaming.bind(this),
@@ -80,7 +81,9 @@ _.extend(LFormsConverter.prototype, {
         'isCopyrighted': oboe.drop,
         'properties': oboe.drop,
         'referenceDocuments': oboe.drop,
-        'registrationState': oboe.drop
+        'registrationState': oboe.drop,
+        'updated': oboe.drop,
+        'updatedBy': oboe.drop
       })
       .done(success)
       .fail(failed);
@@ -101,6 +104,21 @@ _.extend(LFormsConverter.prototype, {
    ************************************************************************
    */
 
+  /**
+   * Handle displayProfiles - It gives displayControl info.
+   * @param {Array of Objects} param - Object containing matrix info
+   * @param {Array} path - path of param
+   */
+  handleDisplayProfiles: function (param, path) {
+    if(param && param.length > 0 && param[0].sectionsAsMatrix) {
+      // Save to 'this'. It will be used in form element handler.
+      this.template = 'list';
+      this.templateOptions = {displayControl: {questionLayout: 'matrix'}};
+    }
+    return oboe.drop();
+  },
+  
+  
   /**
    * Look for noRenderAllowed flag. If present throw forbidden error.
    *
@@ -165,6 +183,7 @@ _.extend(LFormsConverter.prototype, {
       param.header = false;
       if (param.elementType === 'section' || param.elementType === 'form') {
         param.header = true;
+        param.displayControl = this.templateOptions && this.templateOptions.displayControl ? this.templateOptions.displayControl : null;
       }
       delete param.elementType;
 
@@ -195,12 +214,13 @@ _.extend(LFormsConverter.prototype, {
       renameKey(param, 'instructions', 'codingInstructions');
 
       if(param.codingInstructions) {
-        param.codingInstructions = param.codingInstructions.value;
         if(param.codingInstructions.valueFormat) {
           param.codingInstructionsFormat = param.codingInstructions.valueFormat;
         }
+        param.codingInstructions = param.codingInstructions.value;
       }
 
+      delete param._id;
       // Content of param are already changed. Change the key names if any
       renameKey(param, 'cardinality', 'questionCardinality');
       renameKey(param, 'formElements', 'items');
