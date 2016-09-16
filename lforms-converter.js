@@ -420,7 +420,7 @@ function createDataType(question) {
 function doSkipLogic(root) {
 
   traverseItems(root, function(item, ancestors) {
-    if(item.skipLogic && item.skipLogic.conditions && item.skipLogic.condition.length > 0) {
+    if(item.skipLogic) {
       // This is target item. Parse 'condition' to look for source item
       var tokens = item.skipLogic.condition.split('=');
       tokens = _.each(tokens, function(a, ind, arr) {
@@ -438,7 +438,9 @@ function doSkipLogic(root) {
         return stopLooking;
       }, ancestors);
 
-    }
+      if (item.skipLogic.condition === "") {
+        delete item.skipLogic;
+      }}
 
     return false; // Continue traversal for all skipLogic nodes
   }, []);
