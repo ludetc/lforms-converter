@@ -438,9 +438,9 @@ function doSkipLogic(root) {
         return stopLooking;
       }, ancestors);
 
-      //if (item.skipLogic.condition === "") {
-      //  delete item.skipLogic;
-      //}
+      if (item.skipLogic.condition === "") {
+        delete item.skipLogic;
+      }
     }
 
     return false; // Continue traversal for all skipLogic nodes
