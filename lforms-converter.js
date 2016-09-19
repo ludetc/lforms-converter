@@ -440,7 +440,8 @@ function doSkipLogic(root) {
 
       //if (item.skipLogic.condition === "") {
       //  delete item.skipLogic;
-      //}}
+      //}
+    }
 
     return false; // Continue traversal for all skipLogic nodes
   }, []);
